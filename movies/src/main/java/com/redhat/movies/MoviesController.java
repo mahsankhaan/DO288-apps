@@ -33,7 +33,7 @@ public class MoviesController {
 
     @GetMapping("/status")
     public String getStatus() {
-        return status;
+        return flag;
     }
 
 }
