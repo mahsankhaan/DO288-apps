@@ -107,6 +107,8 @@ pipeline {
                 }
                 //TODO: Tag the books:latest image stream as books:stage
                echo 'moving ahead'
+		    
+		    sh 'oc policy add-role-to-group -n mahsankhan-books-dev system:image-puller system:serviceaccounts:mahsankhan-books-stage'
             }
         }
 
@@ -123,7 +125,7 @@ pipeline {
               
 		sh '''   
 		oc project ${STAGE_PROJECT} 
-                oc new-app --name ${APP_NAME} --as-deployment-config  -i books:latest
+                oc new-app --name ${APP_NAME} --as-deployment-config  -i mahsankhan-books-dev/books
                 oc expose svc/${APP_NAME}
                 '''
             }
