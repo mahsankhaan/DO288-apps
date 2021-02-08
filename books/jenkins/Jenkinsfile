@@ -61,8 +61,7 @@ pipeline {
                 //TODO: Create a new app and expose the service
                sh '''
 		        oc project ${DEV_PROJECT}
-			oc new-app --name ${APP_NAME} --as-deployment-config 								--build-env npm_repository=${NEXUS_SERVER} nodejs~${APP_GIT_URL}#custom-pipeline 
-                        --context-dir=books
+			oc new-app --name ${APP_NAME} --as-deployment-config --build-env npm_repository=${NEXUS_SERVER} nodejs~${APP_GIT_URL}#custom-pipelin --context-dir=books
                         oc expoxe svc/${APP_NAME}
                   '''
 
@@ -108,8 +107,7 @@ pipeline {
                 }
                 //TODO: Tag the books:latest image stream as books:stage
                 sh '''
-                   oc policy add-role-to-group -n mahsankhan-books-dev custom-pipeline system:image-puller						
-		   system:serviceaccounts:mahsankhan-books-stage
+                   oc policy add-role-to-group -n mahsankhan-books-dev custom-pipeline system:image-puller system:serviceaccounts:mahsankhan-books-stage
                     '''
             }
         }
