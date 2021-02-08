@@ -62,7 +62,7 @@ pipeline {
                sh '''
 		        oc project ${DEV_PROJECT}
 			oc new-app --name ${APP_NAME} --as-deployment-config --build-env npm_repository=${NEXUS_SERVER} nodejs~${APP_GIT_URL}#custom-pipelin --context-dir=books
-                        oc expoxe svc/${APP_NAME}
+                        oc expose svc/${APP_NAME}
                   '''
 
             }
