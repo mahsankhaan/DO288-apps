@@ -108,7 +108,7 @@ pipeline {
                 //TODO: Tag the books:latest image stream as books:stage
                echo 'moving ahead'
 		    
-		    sh 'oc policy add-role-to-group -n mahsankhan-books-dev system:image-puller system:serviceaccounts:mahsankhan-books-stage'
+		    sh 'oc policy add-role-to-user -n mahsankhan-books-dev system:image-puller system:serviceaccounts:mahsankhan-books-stage'
             }
         }
 
