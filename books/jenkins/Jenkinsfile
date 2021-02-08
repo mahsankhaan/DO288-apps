@@ -11,8 +11,8 @@ pipeline {
 
     environment {
         //TODO: Edit these vars as per your env
-        DEV_PROJECT = "microservice-dev"
-        STAGE_PROJECT = "microservice-stage"
+        DEV_PROJECT = "mahsankhan-books-dev"
+        STAGE_PROJECT = "mahsankhan-books-stage"
         APP_GIT_URL = "https://github.com/mahsankhaan/DO288-apps"
         NEXUS_SERVER = "http://nexus-common.apps.ap45.prod.nextcle.com/repository/nodejs"
 
@@ -108,7 +108,8 @@ pipeline {
                 }
                 //TODO: Tag the books:latest image stream as books:stage
                 sh '''
-                   oc policy add-role-to-group -n microservice-dev system:image-puller                                             system:serviceaccounts:microservice-stage
+                   oc policy add-role-to-group -n mahsankhan-books-dev custom-pipeline system:image-puller						
+		   system:serviceaccounts:mahsankhan-books-stage
                     '''
             }
         }
@@ -123,7 +124,7 @@ pipeline {
                    '''
 
                 echo '### Creating a new app in Staging ###'
-                oc new-app --name ${APP_NAME} -i microservice-dev/book
+                oc new-app --name ${APP_NAME} -i mahsankhan-books-dev/book
                 oc expose svc/${APP_NAME}
             }
         }
