@@ -122,7 +122,6 @@ pipeline {
             }
                 }
             }
-        }
 
         stage('Deploy to Staging Env') {
             steps {
@@ -140,8 +139,7 @@ pipeline {
      sh '''
                 oc project movies-stage
                 oc new-app --as-deployment-config -i ${APP_NAME}:stage
-                oc expose svc/${APP_NAME}
-                    
+                oc expose svc/${APP_NAME}             
        '''
             }
         }
