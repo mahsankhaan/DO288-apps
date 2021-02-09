@@ -100,7 +100,8 @@ pipeline {
                     input message: "Promote to Staging?"
                 }
                 //TODO: Tag the books:latest image stream as books:stage
-            }
+  openshift.tag("${DEV_PROJECT}/books:latest", "${STAGE_PROJECT}/books:stage")            
+}
         }
 
         stage('Deploy to Staging Env') {
