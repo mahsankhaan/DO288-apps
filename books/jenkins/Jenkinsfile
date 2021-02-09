@@ -11,8 +11,8 @@ pipeline {
 
     environment {
         //TODO: Edit these vars as per your env
-        DEV_PROJECT = "mahsankhan-books-dev"
-        STAGE_PROJECT = "mahsankhan-books-stage"
+        DEV_PROJECT = "microservice-dev"
+        STAGE_PROJECT = "microservice-stage"
         APP_GIT_URL = "https://github.com/mahsankhaan/DO288-apps"
         NEXUS_SERVER = "http://nexus-common.apps.ap45.prod.nextcle.com/repository/nodejs"
 
@@ -107,8 +107,12 @@ pipeline {
                 }
                 //TODO: Tag the books:latest image stream as books:stage
                echo 'moving ahead'
+		    script {
+		       openshift.withCluster() {
+    openshift.tag("${DEV_PROJECT}/books:latest", "${STAGE_PROJECT}/books:stage")
+  }	    
+		    }
 		    
-		    sh 'oc policy add-role-to-user -n mahsankhan-books-dev system:image-puller system:serviceaccounts:mahsankhan-books-stage'
             }
         }
 
@@ -125,7 +129,7 @@ pipeline {
               
 		sh '''   
 		oc project ${STAGE_PROJECT} 
-                oc new-app --name ${APP_NAME} --as-deployment-config  -i mahsankhan-books-dev/books
+                oc new-app --name ${APP_NAME} --as-deployment-config  -i books:stage
                 oc expose svc/${APP_NAME}
                 '''
             }
