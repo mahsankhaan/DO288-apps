@@ -135,7 +135,6 @@ pipeline {
                 echo '### Creating a new app in Staging ###'
                 // TODO: Create a new app in staging and expose the service
 
-
      sh '''
                 oc project movies-stage
                 oc new-app --as-deployment-config -i ${APP_NAME}:stage
@@ -144,7 +143,7 @@ pipeline {
             }
         }
 
-        stage('Wait for deployment in Staging') {
+         stage('Wait for deployment in Staging') {
             steps {
                 sh "oc get route ${APP_NAME} -n ${STAGE_PROJECT} -o jsonpath='{ .spec.host }' --loglevel=4 > routehost"
 
@@ -161,5 +160,8 @@ pipeline {
                         echo "Deployment to Staging env is complete. Access the API endpoint at the URL http://${routeHost}/movies."
                     }
                 }
+            }
+        }
+    }
           
 }
