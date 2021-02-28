@@ -12,7 +12,7 @@ RUN yum install -y --disableplugin=subscription-manager --nodocs \
 
 COPY nginx.conf /etc/nginx/
 
-RUN touch /run/nginx.pid && chown -R 1001 /var/log/nginx /run/nginx.pid && chgrp -R 0 /var/log/nginx /run/nginx.pid && RUN chmod -R g=u /var/log/nginx /run/nginx.pid
+RUN touch /run/nginx.pid && chown -R 1001:1001 /var/log/nginx /run/nginx.pid && chgrp -R 0 /var/log/nginx /run/nginx.pid && chmod -R g=u /var/log/nginx /run/nginx.pid
   
 COPY src/ /usr/share/nginx/html
 
