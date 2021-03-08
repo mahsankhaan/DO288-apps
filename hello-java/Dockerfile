@@ -9,6 +9,7 @@ ENV	  JAVA_OPTIONS -Xmx512m
 # Install the Java runtime, create a user for running the app, and set permissions
 RUN   yum install -y --disableplugin=subscription-manager java-1.8.0-openjdk-headless && \
       yum clean all --disableplugin=subscription-manager -y && \
+      adduser 1001 && \
       mkdir -p /opt/app-root/bin
 
 # Copy the runnable fat JAR to the container.
@@ -18,7 +19,6 @@ COPY  run-app.sh /opt/app-root/bin/
 
 RUN   chown -R 1001:1001 /opt/app-root /opt/app-root/bin && \
       chmod -R 0 /opt/app-root /opt/app-root/bin && \
-      chgrp -R g=u /opt/app-root /opt/app-root/bin
 
 
 EXPOSE 8080
